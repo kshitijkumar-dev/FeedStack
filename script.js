@@ -13,12 +13,12 @@ import {
 // 🔁 REPLACE WITH YOUR FIREBASE CONFIG
 // ==============================
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "XXXX",
-  appId: "XXXX"
+  apiKey: "YAIzaSyCAfKmUg2R9MwcgqmvVTpnmjjEF5pzqIx0",
+  authDomain: "feed--stack.firebaseapp.com",
+  projectId: "feed--stack",
+  storageBucket: "feed--stack.firebasestorage.app",
+  messagingSenderId: "G-VJPWBS3X5T",
+  appId: "843233512892"
 };
 
 // ==============================
