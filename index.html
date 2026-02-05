@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vidyarthi Education - Feedback Form</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Vidyarthi Education – Student Feedback Form</h2>
+
+<form id="feedbackForm">
+
+<!-- Student Info -->
+<label>Board</label>
+<select id="board" required>
+<option value="">Select</option>
+<option>ICSE</option>
+<option>CBSE</option>
+</select>
+
+<label>Class / Grade</label>
+<input type="text" id="class" required>
+
+<label>Name (Optional)</label>
+<input type="text" id="name">
+
+<!-- Subject & Teacher -->
+<label>Subject</label>
+<select id="subject" required>
+<option value="">Select</option>
+<option>Maths</option>
+<option>Science</option>
+<option>SST</option>
+<option>English</option>
+</select>
+
+<label>Teacher</label>
+<select id="teacher" required>
+<option value="">Select</option>
+<option>Nilesh Sir</option>
+<option>Vikas Sir</option>
+<option>Avanya Ma'am</option>
+<option>Amit Sir</option>
+</select>
+
+<!-- Teacher Evaluation -->
+<h3>Teacher Evaluation</h3>
+
+<p>Concept Clarity</p>
+<div class="rating">
+<input type="radio" name="clarity" value="1" required>1
+<input type="radio" name="clarity" value="2">2
+<input type="radio" name="clarity" value="3">3
+<input type="radio" name="clarity" value="4">4
+<input type="radio" name="clarity" value="5">5
+</div>
+
+<p>Teaching Engagement</p>
+<div class="rating">
+<input type="radio" name="engagement" value="1" required>1
+<input type="radio" name="engagement" value="2">2
+<input type="radio" name="engagement" value="3">3
+<input type="radio" name="engagement" value="4">4
+<input type="radio" name="engagement" value="5">5
+</div>
+
+<p>Doubt Solving by Teacher</p>
+<div class="rating">
+<input type="radio" name="doubt" value="1" required>1
+<input type="radio" name="doubt" value="2">2
+<input type="radio" name="doubt" value="3">3
+<input type="radio" name="doubt" value="4">4
+<input type="radio" name="doubt" value="5">5
+</div>
+
+<label>Teacher Remarks</label>
+<textarea id="teacherComment"></textarea>
+
+<!-- Study Environment -->
+<h3>Study Environment</h3>
+
+<p>Class Discipline</p>
+<div class="rating">
+<input type="radio" name="discipline" value="1" required>1
+<input type="radio" name="discipline" value="2">2
+<input type="radio" name="discipline" value="3">3
+<input type="radio" name="discipline" value="4">4
+<input type="radio" name="discipline" value="5">5
+</div>
+
+<p>Teaching Pace</p>
+<div class="rating">
+<input type="radio" name="pace" value="1" required>1
+<input type="radio" name="pace" value="2">2
+<input type="radio" name="pace" value="3">3
+<input type="radio" name="pace" value="4">4
+<input type="radio" name="pace" value="5">5
+</div>
+
+<p>Test & Revision Support</p>
+<div class="rating">
+<input type="radio" name="revision" value="1" required>1
+<input type="radio" name="revision" value="2">2
+<input type="radio" name="revision" value="3">3
+<input type="radio" name="revision" value="4">4
+<input type="radio" name="revision" value="5">5
+</div>
+
+<label>Environment Remarks</label>
+<textarea id="environmentComment"></textarea>
+
+<!-- Overall -->
+<h3>Overall Satisfaction</h3>
+
+<div class="rating">
+<input type="radio" name="final" value="1" required>1
+<input type="radio" name="final" value="2">2
+<input type="radio" name="final" value="3">3
+<input type="radio" name="final" value="4">4
+<input type="radio" name="final" value="5">5
+</div>
+
+<label>Overall Suggestions</label>
+<textarea id="overallComment"></textarea>
+
+<button type="submit">Submit Feedback</button>
+
+</form>
+
+</div>
+
+<script type="module" src="script.js"></script>
+</body>
+</html>
