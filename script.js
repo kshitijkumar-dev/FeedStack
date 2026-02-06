@@ -1,42 +1,31 @@
-alert("JS LOADED");
-
-const API_URL = "https://script.google.com/macros/s/AKfycbylp39qegnfcDCIbz69PMLTfmVdl8V31HA6r17E8Z-C6gtPpgo1Wc5TDPO8SaUzJlc/exec";
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxuTJUzvDD3lIQicWZl7KZv-HaJkfeZJA4Jr2JIFCQnnz4_wUdZhBloaPjp1qNai4Lx/exec";
 
 document.getElementById("feedbackForm")
-.addEventListener("submit", async (e) => {
-  e.preventDefault();
+  .addEventListener("submit", async function (e) {
 
-  const payload = {
-    name: "Test",
-    board: "ICSE",
-    class: "X",
-    maths: 5,
-    science: 5,
-    sst: 5,
-    english: 5,
-    discipline: 5,
-    pace: 5,
-    revision: 5,
-    overall: 5,
-    environmentRemark: "test",
-    overallRemark: "test",
-    teachers: [
-      {
-        name: "Nilesh Sir",
-        clarity: 5,
-        doubt: 5,
-        engagement: 5,
-        remark: "good"
+    e.preventDefault();
+
+    const payload = {
+      studentName: document.getElementById("name").value,
+      maths: document.querySelector('input[name="maths"]:checked')?.value,
+      science: document.querySelector('input[name="science"]:checked')?.value,
+      sst: document.querySelector('input[name="sst"]:checked')?.value,
+      english: document.querySelector('input[name="english"]:checked')?.value,
+
+      teachers: {
+        nilesh: document.querySelector('input[name="nilesh"]:checked')?.value,
+        vikas: document.querySelector('input[name="vikas"]:checked')?.value,
+        avanya: document.querySelector('input[name="avanya"]:checked')?.value,
+        amit: document.querySelector('input[name="amit"]:checked')?.value,
+        amar: document.querySelector('input[name="amar"]:checked')?.value
       }
-    ]
-  };
+    };
 
-  const res = await fetch(API_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
-  });
+    const res = await fetch(WEB_APP_URL, {
+      method: "POST",
+      body: JSON.stringify(payload)
+    });
 
-  const txt = await res.text();
-  alert(txt);
+    alert("Feedback Submitted");
+    document.getElementById("feedbackForm").reset();
 });
