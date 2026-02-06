@@ -2,7 +2,7 @@ const form = document.getElementById("feedbackForm");
 const teachersDiv = document.getElementById("teachers");
 const addTeacherBtn = document.getElementById("addTeacher");
 
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbygLaMp20MSJRZpfioZY8DhfC9e1XH9ZEs_WjMkw0pnT1rzDR0YrBj03H78Z1SMhKSW/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzx_qJvxkdd_SGr81X0J2K5DPsRrLNp-oR5eGW5O6iZfqeKtLiejqR_jgVLtGSu2rit/exec";
 
 // ------------------ ADD TEACHER BLOCK ------------------
 
