@@ -1,42 +1,53 @@
-const SHEET_URL = "https://script.google.com/macros/s/AKfycbw77aEEAZRm0ld8Bp41zY0tzrmY0Kmtncw-jMO1GCxAAhBC5HEtbC6waCNpXgRVA1VR/exec";
+<script>
+const API_URL = "https://script.google.com/macros/s/AKfycbypwmxPUpVxFrb9vhHO-E2yQ6Qv3VOhl9Lv4HRfFwF49c6CZb7ZQjnvyUdDQwXQO55E/exec";
 
-form.addEventListener("submit", async (e) => {
+document.getElementById("feedbackForm").addEventListener("submit", async function(e) {
   e.preventDefault();
 
   const teachers = [];
 
-  document.querySelectorAll(".teacherBlock").forEach((block, i) => {
+  document.querySelectorAll(".teacher-block").forEach(block => {
     teachers.push({
-      name: block.querySelector(".teacher").value,
-      clarity: block.querySelector(`input[name="tclarity${i}"]:checked`)?.value || "",
-      doubt: block.querySelector(`input[name="tdoubt${i}"]:checked`)?.value || "",
-      engagement: block.querySelector(`input[name="tengage${i}"]:checked`)?.value || "",
-      remark: block.querySelector("textarea").value || ""
+      name: block.querySelector(".t-name").value,
+      clarity: block.querySelector(".t-clarity").value,
+      doubt: block.querySelector(".t-doubt").value,
+      engagement: block.querySelector(".t-engagement").value,
+      remark: block.querySelector(".t-remark").value
     });
   });
 
   const payload = {
-    name: document.getElementById("name").value || "Anonymous",
+    name: document.getElementById("studentName").value,
     board: document.getElementById("board").value,
     class: document.getElementById("class").value,
-    maths: document.querySelector('input[name="maths"]:checked')?.value,
-    science: document.querySelector('input[name="science"]:checked')?.value,
-    sst: document.querySelector('input[name="sst"]:checked')?.value,
-    english: document.querySelector('input[name="english"]:checked')?.value,
-    discipline: document.querySelector('input[name="discipline"]:checked')?.value,
-    pace: document.querySelector('input[name="pace"]:checked')?.value,
-    revision: document.querySelector('input[name="revision"]:checked')?.value,
-    overall: document.querySelector('input[name="clarity"]:checked')?.value,
-    environmentRemark: document.getElementById("environmentComment").value || "",
-    overallRemark: document.getElementById("overallComment").value || "",
+
+    maths: document.getElementById("maths").value,
+    science: document.getElementById("science").value,
+    sst: document.getElementById("sst").value,
+    english: document.getElementById("english").value,
+
+    discipline: document.getElementById("discipline").value,
+    pace: document.getElementById("pace").value,
+    revision: document.getElementById("revision").value,
+    overall: document.getElementById("overall").value,
+
+    environmentRemark: document.getElementById("envRemark").value,
+    overallRemark: document.getElementById("overallRemark").value,
+
     teachers: teachers
   };
 
-  await fetch(SHEET_URL, {
+  console.log(payload);   // IMPORTANT
+
+  const res = await fetch(API_URL, {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
     body: JSON.stringify(payload)
   });
 
-  alert("Feedback Submitted");
-  form.reset();
+  const txt = await res.text();
+  alert(txt);
 });
+</script>
