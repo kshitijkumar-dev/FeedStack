@@ -1,113 +1,139 @@
-alert("JS OK");
+// ==============================
+// Firebase Imports
+// ==============================
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-const form = document.getElementById("feedbackForm");
-const teachersDiv = document.getElementById("teachers");
+// ==============================
+// FIREBASE CONFIG
+// ==============================
+const firebaseConfig = {
+  apiKey: "YAIzaSyCAfKmUg2R9MwcgqmvVTpnmjjEF5pzqIx0",
+  authDomain: "feed--stack.firebaseapp.com",
+  projectId: "feed--stack",
+  storageBucket: "feed--stack.firebasestorage.app",
+  messagingSenderId: "G-VJPWBS3X5T",
+  appId: "843233512892"
+};
+
+// ==============================
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// ==============================
+// ADD TEACHER BUTTON
+// ==============================
+
+let tCount = 1;
+
 const addTeacherBtn = document.getElementById("addTeacher");
-
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzx_qJvxkdd_SGr81X0J2K5DPsRrLNp-oR5eGW5O6iZfqeKtLiejqR_jgVLtGSu2rit/exec";
-
-// ------------------ ADD TEACHER BLOCK ------------------
+const teachersDiv = document.getElementById("teachers");
 
 addTeacherBtn.addEventListener("click", () => {
 
-  const count = document.querySelectorAll(".teacherBlock").length;
+  const firstBlock = teachersDiv.firstElementChild;
+  const clone = firstBlock.cloneNode(true);
 
-  const block = document.createElement("div");
-  block.classList.add("teacherBlock");
+  clone.querySelectorAll("input[type=radio]").forEach(radio => {
 
-  block.innerHTML = `
-    <select class="teacher">
-      <option>Nilesh Sir</option>
-      <option>Vikas Sir</option>
-      <option>Avanya Ma'am</option>
-      <option>Amit Sir</option>
-      <option>Amar Sir</option>
-    </select>
+    if (radio.name.includes("tclarity"))
+      radio.name = "tclarity" + tCount;
 
-    <p>Clarity</p>
-    <div class="rating">
-      <input type="radio" name="tclarity${count}" value="1">1
-      <input type="radio" name="tclarity${count}" value="2">2
-      <input type="radio" name="tclarity${count}" value="3">3
-      <input type="radio" name="tclarity${count}" value="4">4
-      <input type="radio" name="tclarity${count}" value="5">5
-    </div>
+    if (radio.name.includes("tdoubt"))
+      radio.name = "tdoubt" + tCount;
 
-    <p>Doubt Solving</p>
-    <div class="rating">
-      <input type="radio" name="tdoubt${count}" value="1">1
-      <input type="radio" name="tdoubt${count}" value="2">2
-      <input type="radio" name="tdoubt${count}" value="3">3
-      <input type="radio" name="tdoubt${count}" value="4">4
-      <input type="radio" name="tdoubt${count}" value="5">5
-    </div>
+    if (radio.name.includes("tengage"))
+      radio.name = "tengage" + tCount;
 
-    <p>Engagement</p>
-    <div class="rating">
-      <input type="radio" name="tengage${count}" value="1">1
-      <input type="radio" name="tengage${count}" value="2">2
-      <input type="radio" name="tengage${count}" value="3">3
-      <input type="radio" name="tengage${count}" value="4">4
-      <input type="radio" name="tengage${count}" value="5">5
-    </div>
+    radio.checked = false;
+  });
 
-    <label>Teacher Remarks</label>
-    <textarea class="teachercomment"></textarea>
-  `;
+  clone.querySelector("textarea").value = "";
 
-  teachersDiv.appendChild(block);
+  teachersDiv.appendChild(clone);
+  tCount++;
 });
 
-// ------------------ SUBMIT ------------------
+// ==============================
+// FORM SUBMIT
+// ==============================
 
-form.addEventListener("submit", function (e) {
+const form = document.getElementById("feedbackForm");
+
+form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const teachers = [];
+  const getRadio = (name) =>
+    document.querySelector(`input[name="${name}"]:checked`)?.value || "";
+
+  let teachersArr = [];
+  let selectedTeachers = new Set();
+  let duplicateFound = false;
 
   document.querySelectorAll(".teacherBlock").forEach((block, i) => {
 
-    teachers.push({
-      name: block.querySelector(".teacher").value,
-      clarity: block.querySelector(`input[name="tclarity${i}"]:checked`)?.value || "",
-      doubt: block.querySelector(`input[name="tdoubt${i}"]:checked`)?.value || "",
-      engagement: block.querySelector(`input[name="tengage${i}"]:checked`)?.value || "",
-      remark: block.querySelector(".teachercomment").value
+    const teacherName = block.querySelector(".teacher").value;
+
+    if (selectedTeachers.has(teacherName)) {
+      duplicateFound = true;
+    }
+    selectedTeachers.add(teacherName);
+
+    teachersArr.push({
+      name: teacherName,
+      clarity: getRadio("tclarity" + i),
+      doubtSolving: getRadio("tdoubt" + i),
+      engagement: getRadio("tengage" + i),
+      remark: block.querySelector("textarea").value
     });
 
   });
 
-  const payload = {
+  if (duplicateFound) {
+    alert("Each teacher can be evaluated only once.");
+    return;
+  }
 
-    name: document.getElementById("name").value,
-    board: document.getElementById("board").value,
-    class: document.getElementById("class").value,
+  try {
 
-    maths: document.querySelector('input[name="maths"]:checked')?.value || "",
-    science: document.querySelector('input[name="science"]:checked')?.value || "",
-    sst: document.querySelector('input[name="sst"]:checked')?.value || "",
-    english: document.querySelector('input[name="english"]:checked')?.value || "",
+    await addDoc(collection(db, "feedback"), {
 
-    discipline: document.querySelector('input[name="discipline"]:checked')?.value || "",
-    pace: document.querySelector('input[name="pace"]:checked')?.value || "",
-    revision: document.querySelector('input[name="revision"]:checked')?.value || "",
-    overall: document.querySelector('input[name="clarity"]:checked')?.value || "",
+      name: document.getElementById("name").value,
+      board: document.getElementById("board").value,
+      class: document.getElementById("class").value,
 
-    environmentRemark: document.getElementById("environmentComment").value,
-    overallRemark: document.getElementById("overallComment").value,
+      subjects: {
+        maths: getRadio("maths"),
+        science: getRadio("science"),
+        sst: getRadio("sst"),
+        english: getRadio("english")
+      },
 
-    teachers: teachers
-  };
+      teachers: teachersArr,
 
-  fetch(SCRIPT_URL, {
-    method: "POST",
-    body: JSON.stringify(payload)
-  })
-  .then(r => r.text())
-  .then(() => {
+      environment: {
+        discipline: getRadio("discipline"),
+        pace: getRadio("pace"),
+        revision: getRadio("revision"),
+        comment: document.getElementById("environmentComment").value
+      },
+
+      overallSatisfaction: getRadio("clarity"),
+      overallComment: document.getElementById("overallComment").value,
+
+      timestamp: serverTimestamp()
+    });
+
     alert("Feedback Submitted Successfully");
     form.reset();
-    teachersDiv.innerHTML = document.querySelector(".teacherBlock").outerHTML;
-  })
-  .catch(() => alert("Submission Failed"));
+
+  } catch (err) {
+    console.error(err);
+    alert("Submission Failed");
+  }
 });
