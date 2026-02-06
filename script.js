@@ -1,3 +1,5 @@
+alert("JS OK");
+
 const form = document.getElementById("feedbackForm");
 const teachersDiv = document.getElementById("teachers");
 const addTeacherBtn = document.getElementById("addTeacher");
