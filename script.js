@@ -1,4 +1,4 @@
-const SHEET_URL = "https://script.google.com/macros/s/AKfycbz1_l_Z9NbBBcIF9JPLEl1QRSA1fJ1U82F_SfVbARxjOXqEVHUNKBTX2FTJQIZM_bif/exec";
+const SHEET_URL = "https://script.google.com/macros/s/AKfycbw77aEEAZRm0ld8Bp41zY0tzrmY0Kmtncw-jMO1GCxAAhBC5HEtbC6waCNpXgRVA1VR/exec";
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
