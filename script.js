@@ -1,3 +1,5 @@
+alert("JS LOADED");
+
 const API_URL = "https://script.google.com/macros/s/AKfycbylp39qegnfcDCIbz69PMLTfmVdl8V31HA6r17E8Z-C6gtPpgo1Wc5TDPO8SaUzJlc/exec";
 
 document.getElementById("feedbackForm")
