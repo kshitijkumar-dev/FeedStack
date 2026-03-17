@@ -34,5 +34,5 @@ Built to help teacher's collect digital feedback.
 Built by Kshitij Kumar  
 GitHub: https://github.com/kshitijkumar-dev  
 Email: kshitijkumar.dev@gmail.com  
-LinkedIn: https://www.linkedin.com/in/kshitij-kumar-227a94365
+LinkedIn: https://www.linkedin.com/in/kshitijkumar-dev/
 
